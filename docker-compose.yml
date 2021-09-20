@@ -1,0 +1,47 @@
+version: "3"
+
+services:
+  alice:
+    hostname: alice
+    container_name: alice
+    image: arplab-victim
+    mac_address: 00:00:00:00:00:01
+    tty: true
+    cap_add:
+      - ALL
+    networks:
+      lab-net:
+        ipv4_address: 10.10.0.101
+
+  bob:
+    hostname: bob
+    container_name: bob
+    image: arplab-victim
+    mac_address: 00:00:00:00:00:02
+    tty: true
+    cap_add:
+      - ALL
+    networks:
+      lab-net:
+        ipv4_address: 10.10.0.102
+
+  evie:
+    hostname: evie
+    container_name: evie
+    image: arplab-attacker
+    mac_address: 00:00:00:00:00:03
+    tty: true
+    # privileged: true
+    cap_add:
+      - ALL
+    networks:
+      lab-net:
+        ipv4_address: 10.10.0.103
+
+networks:
+  lab-net:
+    name: arplab-net
+    ipam:
+      config:
+        - subnet: 10.10.0.0/24
+
