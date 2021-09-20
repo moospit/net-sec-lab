@@ -65,7 +65,7 @@ Every 1.0s: ip neigh show
 
 > Notes for `spoofing.py`:
 >
-> - Reports captured HTTP data twice (bug in async. sniffer?)
+> - Reports captured HTTP data twice (bug in async. sniffer/containerisation?)
 > - Sometimes packets are not captured (bug in async. sniffer?)
 
 To start the automatic ARP cache poisoning, run on `evie`:
@@ -118,3 +118,6 @@ Start a shell in one of the containers (by name of the container):
 $ docker exec -it evie /bin/bash
 root@evie:/#
 ```
+
+## License
+The work in this repository may be reused under the terms of [(CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/).

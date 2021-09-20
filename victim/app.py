@@ -4,7 +4,7 @@ Lab - ARP Spoof Attack
 
 This is intentional insecure code! Do NOT use for production!
 
-(c) github.com/moospit
+(CC BY-SA 4.0) github.com/moospit
 """
 
 from flask import Flask, request
@@ -31,4 +31,4 @@ def login() -> str:
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=80)
+    app.run(debug=False, host='0.0.0.0', port=80)

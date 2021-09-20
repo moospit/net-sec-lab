@@ -2,10 +2,10 @@
 Lab - ARP Spoof Attack
     > Static attack code
 
-# To enable ip forwarding on the host:
+# To enable ip forwarding on the host for further tests:
 # echo 1 > /proc/sys/net/ipv4/ip_forward
 
-(c) github.com/moospit
+(CC BY-SA 4.0) github.com/moospit
 """
 
 import logging
