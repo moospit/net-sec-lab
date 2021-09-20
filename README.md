@@ -13,7 +13,7 @@ You get two images for
 - victim
 - attacker
 
-that are used by the containers describes in the next section.
+that are used by the containers described in the next section.
 
 After the images are built, run the containers via the command:
 
@@ -25,6 +25,8 @@ $ docker-compose up -d
  ⠋ Container bob    Creating
  ...
 ```
+
+For accessing the containers, refer to the section at the end of this document.
 
 ## Configuration
 
