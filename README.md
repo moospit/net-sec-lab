@@ -65,8 +65,8 @@ Every 1.0s: ip neigh show
 
 > Notes for `spoofing.py`:
 >
-> - Reports captured HTTP data twice (bug in async. sniffer/containerisation?)
-> - Sometimes packets are not captured (bug in async. sniffer?)
+> - Reports captured HTTP data twice (incoming and outgoing - needs filtering)
+> - Sometimes packets are not captured
 
 To start the automatic ARP cache poisoning, run on `evie`:
 

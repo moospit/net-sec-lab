@@ -7,11 +7,14 @@ This is intentional insecure code! Do NOT use for production!
 (CC BY-SA 4.0) github.com/moospit
 """
 
-from flask import Flask, request
-
+from flask import Flask, request, redirect, url_for, Response
 
 app = Flask(__name__)
 
+@app.route('/')
+def root() -> Response:
+    """ Redirect all request to login """
+    return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login() -> str:
@@ -25,7 +28,7 @@ def login() -> str:
 
     # ensure we got all the data we need
     if '' in (username, password):
-        return 'Unable to login.\nNeed user=<data>&pass=<data> as parameters\n'
+        return 'Login needs user=<data>&pass=<data> as GET- or POST-parameters\n'
 
     return f'Succesfully logged in {username}\n'
 

@@ -7,8 +7,6 @@ services:
     image: arplab-victim
     mac_address: 00:00:00:00:00:01
     tty: true
-    cap_add:
-      - ALL
     networks:
       lab-net:
         ipv4_address: 10.10.0.101
@@ -19,8 +17,6 @@ services:
     image: arplab-victim
     mac_address: 00:00:00:00:00:02
     tty: true
-    cap_add:
-      - ALL
     networks:
       lab-net:
         ipv4_address: 10.10.0.102
