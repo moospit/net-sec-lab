@@ -6,7 +6,7 @@ This repository contains a minimal lab setup for demoing ARP cache poisoning.
 
 - Install `docker` and `docker-compose`
 - Clone this repo
-- Run `docker-compose up -d <--build>` (`--build` is needed for explicitly rebuilding the images)
+- Run `docker-compose build`
 
 You get two images for
 
@@ -28,6 +28,7 @@ $ docker-compose up -d
 
 For accessing the containers, refer to the section at the end of this document.
 
+If you need to explicitly rebuild the images use `docker-compose up -d --build`.
 ## Configuration
 
 There are three containers based on two images
