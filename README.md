@@ -6,7 +6,7 @@ This repository contains a minimal lab setup for demoing ARP cache poisoning.
 
 - Install `docker` and `docker-compose`
 - Clone this repo
-- Run `./build.sh`
+- Run `docker-compose up -d <--build>` (`--build` is needed for explicitly rebuilding the images)
 
 You get two images for
 
