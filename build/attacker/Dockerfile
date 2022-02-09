@@ -8,6 +8,7 @@ RUN apk --update add bash \
     tcpdump \
     curl \
     scapy \
+    ipython \
     tmux
 
 COPY ./spoofing.py /spoofing.py
