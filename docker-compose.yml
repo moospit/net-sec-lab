@@ -14,7 +14,6 @@ services:
   bob:
     hostname: bob
     container_name: bob
-    # image: arplab-victim
     build: ./build/victim
     mac_address: 00:00:00:00:00:02
     tty: true
@@ -25,7 +24,6 @@ services:
   evie:
     hostname: evie
     container_name: evie
-    # image: arplab-attacker
     build: ./build/attacker
     mac_address: 00:00:00:00:00:03
     tty: true
@@ -38,7 +36,6 @@ services:
 
 networks:
   lab-net:
-    # name: arplab-net
     ipam:
       config:
         - subnet: 10.10.0.0/24
