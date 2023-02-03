@@ -2,6 +2,8 @@
 
 This repository contains a minimal lab setup for demoing ARP cache poisoning.
 
+> The code contained in this repository is intentionally INSECURE and must NOT be used in production!
+
 ## Setup
 
 - Install `docker` and `docker-compose`
