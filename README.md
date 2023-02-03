@@ -52,7 +52,7 @@ $ scapy
 >>> a.psrc('10.10.0.102')
 ```
 
-During the attack, control the system's ARP cache for changes via
+During the attack, monitor the system's ARP cache for changes via
 
 ```bash
 $ watch -d -n1 "ip neigh show"
@@ -61,6 +61,10 @@ Every 1.0s: ip neigh show
 10.10.0.102 dev eth0 lladdr 00:00:00:00:00:02 REACHABLE
 ...
 ```
+
+> `watch` executes the command `ip neigh show` (show ARP cache) every second (`-n1`) and highlights changes (`-d`).
+
+If the attack is successful, the associated MAC address of the targeted IP address should have changed.
 
 ## Automatic ARP Cache Poisoning
 
@@ -106,9 +110,9 @@ $ docker-compose down
 ```bash
 $ docker ps
 CONTAINER ID   IMAGE             COMMAND            CREATED              STATUS              PORTS     NAMES
-9e7773fe5b5f   arplab-attacker   "bash"             About a minute ago   Up About a minute             evie
-ec2daae008fa   arplab-victim     "python3 app.py"   About a minute ago   Up About a minute             alice
-ccd77adca40f   arplab-victim     "python3 app.py"   About a minute ago   Up About a minute             bob
+<id>           arplab-attacker   "bash"             About a minute ago   Up About a minute             evie
+<id>           arplab-victim     "python3 app.py"   About a minute ago   Up About a minute             alice
+<id>           arplab-victim     "python3 app.py"   About a minute ago   Up About a minute             bob
 ```
 
 ### Accessing a containers
