@@ -1,8 +1,16 @@
 """
 Lab - ARP Spoof Attack
-    > Webapp for demo
 
-This is intentional insecure code! Do NOT use for production!
+Webapplication for demonstration purposes.
+
+Use this application to transmit unencrypted HTTP traffic (GET/POST)
+that can be intercepted by e.g. ARP Cache poisoning attacks.
+
+Examples for demo'ing:
+GET:  curl "<host>/login?user=<user>&pass=<pass>"
+POST: curl "<host>/login" --data="user=<user>&pass=<pass>"
+
+ - This is intentional insecure code! Do NOT use for production! -
 
 (CC BY-SA 4.0) github.com/moospit
 """
@@ -27,6 +35,7 @@ def login() -> str:
         password = request.args.get('pass', '')
 
     # ensure we got all the data we need
+    # return a error message if there is something missing
     if '' in (username, password):
         return 'Login needs user=<data>&pass=<data> as GET- or POST-parameters\n'
 
