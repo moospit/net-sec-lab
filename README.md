@@ -7,6 +7,8 @@ This repository contains a minimal lab setup for demoing ARP cache poisoning and
 
 > This lab setup is only for demo'ing purposes and MUST NOT be used in production!
 
+> The code contained in this repository is intentionally INSECURE and must NOT be used in production!
+
 ## Setup
 
 - Install `docker` and `docker-compose`
@@ -68,7 +70,7 @@ $ scapy
 >>> ...
 ```
 
-During the attack, control the system's ARP cache for changes via
+During the attack, monitor the system's ARP cache for changes via
 
 ```bash
 $ watch -d -n1 "ip neigh show"
@@ -78,7 +80,9 @@ Every 1.0s: ip neigh show
 ...
 ```
 
-You should be able to see the MAC address of `bob's` ip changing to `evie's` MAC address.
+If the attack was successful you should be able to see the MAC address of `bob's` ip changing to `evie's` MAC address.
+
+> `watch` executes the command `ip neigh show` (show ARP cache) every second (`-n1`) and highlights changes (`-d`).
 
 
 ## Automatic ARP Cache Poisoning
@@ -155,9 +159,9 @@ $ docker-compose down
 ```bash
 $ docker ps
 CONTAINER ID   IMAGE             COMMAND            CREATED              STATUS              PORTS     NAMES
-9e7773fe5b5f   arplab-attacker   "bash"             About a minute ago   Up About a minute             evie
-ec2daae008fa   arplab-victim     "python3 app.py"   About a minute ago   Up About a minute             alice
-ccd77adca40f   arplab-victim     "python3 app.py"   About a minute ago   Up About a minute             bob
+<id>           arplab-attacker   "bash"             About a minute ago   Up About a minute             evie
+<id>           arplab-victim     "python3 app.py"   About a minute ago   Up About a minute             alice
+<id>           arplab-victim     "python3 app.py"   About a minute ago   Up About a minute             bob
 ```
 
 ### Accessing a containers
