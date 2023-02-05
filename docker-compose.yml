@@ -34,6 +34,17 @@ services:
       lab-net:
         ipv4_address: 10.10.0.103
 
+  udpserv:
+    hostname: udpserv
+    container_name: udpserv
+    build: ./build/udpserver
+    mac_address: 00:00:00:00:00:04
+    tty: true
+    networks:
+      lab-net:
+        ipv4_address: 10.10.0.104    
+
+
 networks:
   lab-net:
     ipam:
