@@ -33,7 +33,7 @@ $ docker-compose up -d
  ...
 ```
 
-For accessing the containers, refer to the section at the end of this document.
+> For accessing the containers, refer to the section at the end of this document.
 
 If you need to explicitly rebuild the images use `docker-compose up -d --build`.
 
@@ -161,7 +161,7 @@ CONTAINER ID   IMAGE             COMMAND            CREATED              STATUS 
 <id>           arplab-victim     "python3 app.py"   About a minute ago   Up About a minute             bob
 ```
 
-### Accessing a containers
+### Accessing a containers shell
 
 Start a shell in one of the containers (by name of the container):
 
