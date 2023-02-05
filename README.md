@@ -58,10 +58,10 @@ $ scapy
 >>> a = ARP()                      # create an ARP packet
 >>> a.show()                       # have a look at the ARP packet
 >>> a.op = 'is-at'                 # Unsolicited ARP
->>> a.pdst = '10.10.0.101'         # Alice's IP
->>> a.psrc = '10.10.0.102'         # Bob's IP
->>> a.hwdst = '00:00:00:00:00:01'  # Alice's MAC
->>> a.hwsrc = '00:00:00:00:00:03'  # Evie's MAC
+>>> a.pdst = '10.10.0.101'         # L3-Dst: Alice
+>>> a.psrc = '10.10.0.102'         # L3-Src: Bob
+>>> a.hwdst = '00:00:00:00:00:01'  # L2-Dst: Alice
+>>> a.hwsrc = '00:00:00:00:00:03'  # L2-Src: Evie
 >>> a.show()                       # check the values again
 >>> send(a)                        # send the Packet (on L3, for convenience)
 >>> ...
