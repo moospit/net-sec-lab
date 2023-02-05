@@ -1,10 +1,13 @@
-version: "3"
+version: "3.4"
 
 services:
   alice:
     hostname: alice
     container_name: alice
-    build: ./build/victim
+    image: victim:1.0
+    build:
+      context: ./build/victim
+      dockerfile: ./Dockerfile
     mac_address: 00:00:00:00:00:01
     tty: true
     networks:
@@ -12,9 +15,9 @@ services:
         ipv4_address: 10.10.0.101
 
   bob:
+    image: victim:1.0
     hostname: bob
     container_name: bob
-    build: ./build/victim
     mac_address: 00:00:00:00:00:02
     tty: true
     networks:
@@ -24,7 +27,10 @@ services:
   evie:
     hostname: evie
     container_name: evie
-    build: ./build/attacker
+    image: attacker:1.0
+    build:
+      context: ./build/attacker
+      dockerfile: ./Dockerfile
     mac_address: 00:00:00:00:00:03
     tty: true
     # privileged: true
@@ -37,7 +43,10 @@ services:
   udpserv:
     hostname: udpserv
     container_name: udpserv
-    build: ./build/udpserver
+    image: udpserv:1.0
+    build:
+      context: ./build/udpserver
+      dockerfile: ./Dockerfile
     mac_address: 00:00:00:00:00:04
     tty: true
     networks:

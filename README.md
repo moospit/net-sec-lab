@@ -2,8 +2,8 @@
 
 This repository contains a minimal lab setup for demoing ARP cache poisoning and IP spoofing.
 
- - [Wikipedia: Arp Spoofing](https://en.wikipedia.org/wiki/ARP_spoofing)
- - [Wikipedia: IP Spoofing](https://en.wikipedia.org/wiki/IP_address_spoofing)
+- [Wikipedia: Arp Spoofing](https://en.wikipedia.org/wiki/ARP_spoofing)
+- [Wikipedia: IP Spoofing](https://en.wikipedia.org/wiki/IP_address_spoofing)
 
 > The code contained in this repository is intentionally INSECURE and must NOT be used in production!
 
@@ -11,13 +11,13 @@ This repository contains a minimal lab setup for demoing ARP cache poisoning and
 
 - Install `docker` and `docker-compose`
 - Clone this repo
-- Run `docker-compose build`
+- Run `docker-compose build` to build the images
 
 You get three images for
 
-- victim
-- attacker
-- udpserver
+- `victim`
+- `attacker`
+- `udpserv`
 
 that are used by the containers described in the next section.
 
@@ -47,7 +47,6 @@ There are three containers based on two images
 | `bob`     | 10.10.0.102 | 00:00:00:00:00:02 | Victim          | 80/tcp (http)   |
 | `evie`    | 10.10.0.103 | 00:00:00:00:00:03 | Attacker        | -               |
 | `udpserv` | 10.10.0.104 | 00:00:00:00:00:04 | UDP Echo Server | 9999/udp (echo) |
-
 
 ## Manual ARP Cache Poisoning
 
@@ -82,6 +81,7 @@ If the attack was successful you should be able to see the MAC address of `bob's
 
 > `watch` executes the command `ip neigh show` (show ARP cache) every second (`-n1`) and highlights changes (`-d`).
 
+> Sometimes the ARP cache does not get overwritten immediately - so try another time if there is no success.
 
 ## Automatic ARP Cache Poisoning
 
@@ -136,7 +136,6 @@ $ tcpdump -i eth0 -X udp
 	0x0030:  6361 6263 6162 6361 6263                 cabcabcabc
 ...
 ```
-
 
 ## Common docker commands
 
