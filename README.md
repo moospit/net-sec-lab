@@ -5,8 +5,6 @@ This repository contains a minimal lab setup for demoing ARP cache poisoning and
  - [Wikipedia: Arp Spoofing](https://en.wikipedia.org/wiki/ARP_spoofing)
  - [Wikipedia: IP Spoofing](https://en.wikipedia.org/wiki/IP_address_spoofing)
 
-> This lab setup is only for demo'ing purposes and MUST NOT be used in production!
-
 > The code contained in this repository is intentionally INSECURE and must NOT be used in production!
 
 ## Setup
