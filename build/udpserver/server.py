@@ -50,9 +50,8 @@ async def main() -> None:
     print(f'running on {SERVER_ADDR}:{SERVER_PORT}')
 
     try:
-        while loop.is_running():  # run forever
+        while loop.is_running():
             await asyncio.sleep(10)
-        # await asyncio.sleep(3600)  # serve for 1 hour.
     except KeyboardInterrupt:
         print('user requested exit')
     finally:
