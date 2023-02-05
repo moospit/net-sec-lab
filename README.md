@@ -155,10 +155,11 @@ $ docker-compose down
 
 ```bash
 $ docker ps
-CONTAINER ID   IMAGE             COMMAND            CREATED              STATUS              PORTS     NAMES
-<id>           arplab-attacker   "bash"             About a minute ago   Up About a minute             evie
-<id>           arplab-victim     "python3 app.py"   About a minute ago   Up About a minute             alice
-<id>           arplab-victim     "python3 app.py"   About a minute ago   Up About a minute             bob
+CONTAINER ID   IMAGE          COMMAND               CREATED         STATUS         PORTS     NAMES
+<id>           victim:1.0     "python3 app.py"      4 seconds ago   Up 2 seconds             alice
+<id>           udpserv:1.0    "python3 server.py"   4 seconds ago   Up 2 seconds             udpserv
+<id>           victim:1.0     "python3 app.py"      4 seconds ago   Up 2 seconds             bob
+<id>           attacker:1.0   "/bin/sh"             4 seconds ago   Up 2 seconds             evie
 ```
 
 ### Accessing a containers shell
