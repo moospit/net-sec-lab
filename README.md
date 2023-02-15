@@ -58,10 +58,10 @@ $ scapy
 >>> a = ARP()                      # create an ARP packet
 >>> a.show()                       # have a look at the ARP packet
 >>> a.op = 'is-at'                 # Unsolicited ARP
->>> a.pdst = '10.10.0.101'         # Alice's IP
->>> a.psrc = '10.10.0.102'         # Bob's IP
->>> a.hwdst = '00:00:00:00:00:01'  # Alice's MAC
->>> a.hwsrc = '00:00:00:00:00:03'  # Evie's MAC
+>>> a.pdst = '10.10.0.101'         # L3-Dst: Alice
+>>> a.psrc = '10.10.0.102'         # L3-Src: Bob
+>>> a.hwdst = '00:00:00:00:00:01'  # L2-Dst: Alice
+>>> a.hwsrc = '00:00:00:00:00:03'  # L2-Src: Evie
 >>> a.show()                       # check the values again
 >>> send(a)                        # send the Packet (on L3, for convenience)
 >>> ...
@@ -155,10 +155,11 @@ $ docker-compose down
 
 ```bash
 $ docker ps
-CONTAINER ID   IMAGE             COMMAND            CREATED              STATUS              PORTS     NAMES
-<id>           arplab-attacker   "bash"             About a minute ago   Up About a minute             evie
-<id>           arplab-victim     "python3 app.py"   About a minute ago   Up About a minute             alice
-<id>           arplab-victim     "python3 app.py"   About a minute ago   Up About a minute             bob
+CONTAINER ID   IMAGE          COMMAND               CREATED         STATUS         PORTS     NAMES
+<id>           victim:1.0     "python3 app.py"      4 seconds ago   Up 2 seconds             alice
+<id>           udpserv:1.0    "python3 server.py"   4 seconds ago   Up 2 seconds             udpserv
+<id>           victim:1.0     "python3 app.py"      4 seconds ago   Up 2 seconds             bob
+<id>           attacker:1.0   "/bin/sh"             4 seconds ago   Up 2 seconds             evie
 ```
 
 ### Accessing a containers shell
