@@ -5,13 +5,13 @@ This repository contains a minimal lab setup for demoing ARP cache poisoning and
 - [Wikipedia: ARP Spoofing](https://en.wikipedia.org/wiki/ARP_spoofing)
 - [Wikipedia: IP Spoofing](https://en.wikipedia.org/wiki/IP_address_spoofing)
 
-> The code contained in this repository is intentionally INSECURE and must NOT be used in production!
+> The code contained in this repository is intentionally **INSECURE** and must **NOT** be used in production!
 
 ## Setup
 
-- Install `docker` and `docker-compose`
+- Install `docker` (and `docker-compose` if your Docker does not support `compose` directly)
 - Clone this repo
-- Run `docker-compose build` to build the images
+- Run `docker-compose build --pull` to pull and build the images
 
 You get three images for
 
@@ -143,11 +143,11 @@ $ tcpdump -i eth0 -X udp
 
 ```bash
 # Bring containers up
-$ docker-compose up -d
+$ docker compose up -d
 # Show logs of all containers
-$ docker-compose logs -f
+$ docker compose logs -f
 # Bring all containers down
-$ docker-compose down
+$ docker compose down
 ...
 ```
 
