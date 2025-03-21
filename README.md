@@ -1,3 +1,5 @@
+[![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]
+
 # ARP Cache Poisoning & IP Spoofing Lab
 
 This repository contains a minimal lab setup for demoing ARP cache poisoning and IP spoofing.
@@ -6,6 +8,17 @@ This repository contains a minimal lab setup for demoing ARP cache poisoning and
 - [Wikipedia: IP Spoofing](https://en.wikipedia.org/wiki/IP_address_spoofing)
 
 > The code contained in this repository is intentionally **INSECURE** and must **NOT** be used in production!
+
+## License
+
+This work is licensed under a
+[Creative Commons Attribution-ShareAlike 4.0 International License][cc-by-sa].
+
+[![CC BY-SA 4.0][cc-by-sa-image]][cc-by-sa]
+
+[cc-by-sa]: http://creativecommons.org/licenses/by-sa/4.0/
+[cc-by-sa-image]: https://licensebuttons.net/l/by-sa/4.0/88x31.png
+[cc-by-sa-shield]: https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg
 
 ## Setup
 
@@ -170,7 +183,3 @@ Start a shell in one of the containers (by name of the container):
 $ docker exec -it evie /bin/bash
 root@evie:/#
 ```
-
-## License
-
-The work in this repository may be reused under the terms of [(CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/).
