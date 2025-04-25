@@ -76,7 +76,7 @@ $ scapy
 >>> a.hwdst = '00:00:00:00:00:01'  # L2-Dst: Alice
 >>> a.hwsrc = '00:00:00:00:00:03'  # L2-Src: Evie
 >>> a.show()                       # check the values again
->>> send(a)                        # send the Packet (on L3, for convenience)
+>>> send(a)                        # send the Packet (use L3, for convenience)
 >>> ...
 ```
 
@@ -95,6 +95,12 @@ If the attack was successful you should be able to see the MAC address of `bob's
 > `watch` executes the command `ip neigh show` (show ARP cache) every second (`-n1`) and highlights changes (`-d`).
 
 > Sometimes the ARP cache does not get overwritten immediately - so try another time if there is no success.
+
+If you want to send the ARP packets via `scapy`'s L2-function `sendp`, you need to do pack the ARP-Packet into an Ethernet frame:
+
+```bash
+>>> sendp(Ether(dst='00:00:00:00:00:01')/a, iface='eth0')
+```
 
 ## Automatic ARP Cache Poisoning
 
