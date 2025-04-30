@@ -61,9 +61,13 @@ There are three containers based on two images
 | `evie`    | 10.10.0.103 | 00:00:00:00:00:03 | Attacker        | -               |
 | `udpserv` | 10.10.0.104 | 00:00:00:00:00:04 | UDP Echo Server | 9999/udp (echo) |
 
+See `Common Docker commands` below for how to connect into a running container.
+
 ## Manual ARP Cache Poisoning
 
-Tell `alice` that the ip address of `bob` resides at `evie's` mac address.
+It's always a good idea to start with some usual traffic to check the connectivity and check if the ARP cache gets populated. So just ping `bob` from `alice` and vice versa.
+
+To attack and tell `alice` that the ip address of `bob` resides at `evie's` mac address.
 
 ```python
 $ scapy
@@ -96,7 +100,7 @@ If the attack was successful you should be able to see the MAC address of `bob's
 
 > Sometimes the ARP cache does not get overwritten immediately - so try another time if there is no success.
 
-If you want to send the ARP packets via `scapy`'s L2-function `sendp`, you need to do pack the ARP-Packet into an Ethernet frame:
+If you want to send the ARP packets via `scapy`'s L2-function `sendp` (stealth mode), you need to do pack the ARP-Packet into an Ethernet frame:
 
 ```bash
 >>> sendp(Ether(dst='00:00:00:00:00:01')/a, iface='eth0')
