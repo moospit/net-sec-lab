@@ -1,3 +1,5 @@
+> This repo is archived. Active developement is happening here: https://codeberg.org/moospit/net-sec-lab
+
 [![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]
 
 # ARP Cache Poisoning & IP Spoofing Lab
