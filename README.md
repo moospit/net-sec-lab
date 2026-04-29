@@ -7,7 +7,7 @@ This repository contains a minimal lab setup for demoing ARP cache poisoning and
 - [Wikipedia: ARP Spoofing](https://en.wikipedia.org/wiki/ARP_spoofing)
 - [Wikipedia: IP Spoofing](https://en.wikipedia.org/wiki/IP_address_spoofing)
 
-> The code contained in this repository is intentionally **INSECURE** and must **NOT** be used in production!
+> The container setup contained in this repository is intentionally **INSECURE** and must **NOT** be used in production!
 
 ## License
 
@@ -96,15 +96,17 @@ Every 1.0s: ip neigh show
 
 If the attack was successful you should be able to see the MAC address of `bob's` ip changing to `evie's` MAC address.
 
-> `watch` executes the command `ip neigh show` (show ARP cache) every second (`-n1`) and highlights changes (`-d`).
+> 💡 `watch` executes the command `ip neigh show` (show ARP cache) every second (`-n1`) and highlights changes (`-d`).
 
-> Sometimes the ARP cache does not get overwritten immediately - so try another time if there is no success.
+Sometimes the ARP cache does not get overwritten immediately - so try another time if there is no success.
 
 If you want to send the ARP packets via `scapy`'s L2-function `sendp` (stealth mode), you need to do pack the ARP-Packet into an Ethernet frame:
 
 ```bash
 >>> sendp(Ether(dst='00:00:00:00:00:01')/a, iface='eth0')
 ```
+
+> 💡 To flush the arp cache of a system, simply run `ip neigh flush dev eth0`.
 
 ## Automatic ARP Cache Poisoning
 

@@ -8,6 +8,8 @@ services:
       dockerfile: ./Dockerfile
     mac_address: 00:00:00:00:00:01
     tty: true
+    cap_add:
+      - NET_ADMIN
     networks:
       lab-net:
         ipv4_address: 10.10.0.101
@@ -18,6 +20,8 @@ services:
     container_name: bob
     mac_address: 00:00:00:00:00:02
     tty: true
+    cap_add:
+      - NET_ADMIN
     networks:
       lab-net:
         ipv4_address: 10.10.0.102
@@ -31,9 +35,8 @@ services:
       dockerfile: ./Dockerfile
     mac_address: 00:00:00:00:00:03
     tty: true
-    # privileged: true
     cap_add:
-      - ALL
+      - NET_RAW
     networks:
       lab-net:
         ipv4_address: 10.10.0.103
